@@ -41,7 +41,7 @@ const Header = () => {
       setUser(null);
       router.push('/auth/login');
     } catch (err) {
-      console.error('Ошибка при выходе:', err);
+      console.error('Error at logout!:', err);
     }
   }
 
@@ -60,8 +60,8 @@ const Header = () => {
 
         <nav className="hidden md:flex gap-6 text-lg">
           <Link href="/" className="hover:text-gray-200">Main</Link>
-          {user && <Link href="/profile" className="hover:text-gray-200">Profile</Link>}
-          {user && <Link href="/contact" className="hover:text-gray-200">Contact</Link>}
+          <Link href="/profile" className="hover:text-gray-200">Profile</Link>
+          <Link href="/settings" className="hover:text-gray-200">Settings</Link>
         </nav>
 
         <div className="hidden md:flex items-center gap-4">

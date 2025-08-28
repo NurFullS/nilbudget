@@ -1,16 +1,43 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import { TextField } from '@mui/material'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { TextField } from '@mui/material';
 
 const Balance = () => {
-    const [balance, setBalance] = useState(0)
-    const [currency, setCurrency] = useState('$')
-    const [openModalBalance, setOpenModalBalance] = useState(false)
-    const [amount, setAmount] = useState('')
-    const [openModalConsumption, setOpenModalConsumption] = useState(false)
-    const [description, setDescription] = useState('')
+    const [balance, setBalance] = useState(0);
+    const [newCurrency, setCurrency] = useState('USD'); 
+    const [openModalBalance, setOpenModalBalance] = useState(false);
+    const [openModalConsumption, setOpenModalConsumption] = useState(false);
+    const [amount, setAmount] = useState('');
+    const [description, setDescription] = useState('');
 
-    const handleIncome = () => setOpenModalBalance(true)
+    const currencySymbols: Record<string, string> = {
+        USD: '$',
+        KGS: 'KGS',
+        EUR: '€',
+        RUB: '₽'
+    };
+
+    const handleIncome = () => setOpenModalBalance(true);
+    const handleConsumption = () => setOpenModalConsumption(true);
+
+    const resetFields = () => {
+        setAmount('');
+        setDescription('');
+    };
+
+    const fetchUser = async () => {
+        try {
+            const res = await axios.get('http://localhost:8080/auth/me', { withCredentials: true });
+            setBalance(res.data.balance);
+            setCurrency(res.data.valute || 'USD');
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    useEffect(() => {
+        fetchUser();
+    }, []);
 
     const handleAddIncome = async () => {
         const num = Number(amount);
@@ -19,17 +46,26 @@ const Balance = () => {
         try {
             const res = await axios.post(
                 'http://localhost:8080/auth/income',
-                { amount: num, description: description || '' },
+                { amount: num, newCurrency }, 
                 { withCredentials: true }
             );
 
             setBalance(res.data.balance);
             setCurrency(res.data.valute);
-            setAmount('');
-            setDescription('');
             setOpenModalBalance(false);
+            resetFields();
         } catch (err) {
             console.error('Error adding income:', err);
+        }
+
+        try {
+            await axios.post(
+                "http://localhost:8080/auth/valute",
+                { valute: newCurrency },
+                { withCredentials: true }
+            );
+        } catch (error) {
+            console.error("Error updating currency:", error);
         }
     };
 
@@ -46,39 +82,22 @@ const Balance = () => {
 
             setBalance(res.data.balance);
             setOpenModalConsumption(false);
-            setAmount('');
+            resetFields();
         } catch (err) {
             console.error('Error subtracting balance:', err);
         }
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await axios.get('http://localhost:8080/auth/me', { withCredentials: true })
-                setBalance(res.data.balance)
-                setCurrency(res.data.valute)
-            } catch (error) {
-                console.error(error)
-            }
-        }
-        fetchData()
-    }, [])
-
-    const handleConsumption = () => {
-        setOpenModalConsumption(true)
-    }
-
     return (
         <>
-            <div className="w-[400px] h-[200px] ml-30 mt-10 bg-white shadow-lg rounded-2xl p-6 flex flex-col justify-between">
+            <div className="w-[400px] h-[200px] ml-30 mt-10 bg-green-200 shadow-lg rounded-2xl p-6 flex flex-col justify-between">
                 <div className="flex justify-between items-center">
                     <h2 className="text-xl font-bold text-gray-700">Balance</h2>
-                    <span className="text-sm text-gray-500">{currency}</span>
+                    <span className="text-sm text-gray-500">{currencySymbols[newCurrency]}</span>
                 </div>
 
                 <div className="text-4xl font-extrabold text-green-600">
-                    {balance.toLocaleString()} {currency}
+                    {(balance ?? 0).toLocaleString()} {currencySymbols[newCurrency] || 'USD'}
                 </div>
 
                 <div className="flex justify-between mt-4">
@@ -100,7 +119,7 @@ const Balance = () => {
             {openModalConsumption && (
                 <div className="fixed inset-0 flex justify-center items-center bg-gray-400 bg-opacity-50 z-50">
                     <div className="bg-white rounded-2xl shadow-lg w-[300px] p-6 text-center">
-                        <h1 className="text-xl font-bold mb-4">Add Income</h1>
+                        <h1 className="text-xl font-bold mb-4">Add Consumption</h1>
                         <input
                             type="number"
                             value={amount}
@@ -121,12 +140,12 @@ const Balance = () => {
                         <div className="flex justify-between">
                             <button
                                 onClick={handleAddConsumption}
-                                className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition"
+                                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
                             >
-                                Consumption
+                                Add
                             </button>
                             <button
-                                onClick={() => setOpenModalConsumption(false)}
+                                onClick={() => { setOpenModalConsumption(false); resetFields(); }}
                                 className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500 transition"
                             >
                                 Close
@@ -148,14 +167,14 @@ const Balance = () => {
                             className="border border-gray-300 rounded-lg px-4 py-2 w-full mb-4 outline-none"
                         />
                         <select
-                            value={currency}
+                            value={newCurrency}
                             onChange={(e) => setCurrency(e.target.value)}
                             className="border border-gray-300 rounded-lg px-4 py-2 w-full mb-4 outline-none"
                         >
-                            <option value="$">USD</option>
+                            <option value="USD">USD</option>
                             <option value="KGS">KGS</option>
-                            <option value="€">EUR</option>
-                            <option value="₽">RUB</option>
+                            <option value="EUR">EUR</option>
+                            <option value="RUB">RUB</option>
                         </select>
                         <div className="flex justify-between">
                             <button
@@ -165,7 +184,7 @@ const Balance = () => {
                                 Add
                             </button>
                             <button
-                                onClick={() => setOpenModalBalance(false)}
+                                onClick={() => { setOpenModalBalance(false); resetFields(); }}
                                 className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500 transition"
                             >
                                 Close
@@ -175,7 +194,7 @@ const Balance = () => {
                 </div>
             )}
         </>
-    )
-}
+    );
+};
 
 export default Balance;

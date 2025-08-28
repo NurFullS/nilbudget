@@ -33,7 +33,7 @@ const History = () => {
   if (loading)
     return (
       <div className="flex justify-center items-center text-center h-64">
-        <p className="text-gray-500 text-lg text-center justify-center ml-[300px]">Loading...</p>
+        <p className="text-gray-500 text-lg">Loading...</p>
       </div>
     );
 
@@ -45,44 +45,46 @@ const History = () => {
     );
 
   return (
-    <div className="p-6 bg-white shadow-lg rounded-2xl max-w-4xl mx-auto mt-10">
+    <div className="p-6 bg-blue-100 shadow-lg rounded-2xl max-w-4xl mx-auto mt-10">
       <h2 className="text-2xl font-bold text-gray-700 mb-6 text-center">Expense History</h2>
 
       {history.length === 0 ? (
         <p className="text-gray-500 text-center">History is empty</p>
       ) : (
         <div className="overflow-x-auto">
-          <table className="min-w-full border border-gray-200 divide-y divide-gray-200">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
-                  Data
-                </th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
-                  Summ
-                </th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
-                  Description
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {history.map((item, idx) => (
-                <tr
-                  key={item.id || idx}
-                  className={`hover:bg-gray-50 ${idx % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
-                >
-                  <td className="px-6 py-4 text-sm text-gray-600">
-                    {new Date(item.date).toLocaleString()}
-                  </td>
-                  <td className="px-6 py-4 text-sm font-medium text-green-600">
-                    {item.amount} KGS
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-600">{item.description || '-'}</td>
+          <div className="max-h-[400px] overflow-y-auto border border-gray-200 rounded-lg">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-100 sticky top-0 z-10">
+                <tr>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                    Date
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                    Sum
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                    Description
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {history.map((item, idx) => (
+                  <tr
+                    key={item.id || idx}
+                    className={`hover:bg-gray-50 ${idx % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
+                  >
+                    <td className="px-6 py-4 text-sm text-gray-600">
+                      {new Date(item.date).toLocaleString()}
+                    </td>
+                    <td className="px-6 py-4 text-sm font-medium text-green-600">
+                      {item.amount} KGS
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-600">{item.description || 'Income'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>

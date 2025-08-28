@@ -78,7 +78,7 @@ const Profile = () => {
 
                             <div>
                                 <p className="text-gray-500 text-sm mb-1">Role:</p>
-                                <p className="text-gray-900 font-medium text-lg">Пользователь</p>
+                                <p className="text-gray-900 font-medium text-lg">User</p>
                             </div>
 
                             <div>

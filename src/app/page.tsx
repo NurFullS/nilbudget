@@ -1,28 +1,26 @@
 'use client'
 
 import axios from "axios";
-import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import Balance from "./components/Balance";
 import History from "./components/History";
-
-interface User {
-  id: number;
-  username: string;
-  email: string;
-}
+import Footer from "./components/Footer";
 
 export default function Home() {
-
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <Header />
-      <div className="flex">
+
+      <div className="flex gap-6">
         <Sidebar />
-        <Balance />
-        <History />
+        <div className="flex gap-30">
+          <Balance />
+          <History />
+        </div>
       </div>
-    </>
+
+      <Footer />
+    </div>
   );
 }
