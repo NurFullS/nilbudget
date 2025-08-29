@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -45,7 +47,7 @@ const History = () => {
     );
 
   return (
-    <div className="p-6 bg-blue-100 shadow-lg rounded-2xl max-w-4xl mx-auto mt-10">
+    <div className="p-4 sm:p-6 bg-blue-100 shadow-lg rounded-2xl max-w-full sm:max-w-4xl mx-auto mt-10">
       <h2 className="text-2xl font-bold text-gray-700 mb-6 text-center">Expense History</h2>
 
       {history.length === 0 ? (
@@ -56,13 +58,13 @@ const History = () => {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-100 sticky top-0 z-10">
                 <tr>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
                     Date
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
                     Sum
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
                     Description
                   </th>
                 </tr>
@@ -73,13 +75,13 @@ const History = () => {
                     key={item.id || idx}
                     className={`hover:bg-gray-50 ${idx % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
                   >
-                    <td className="px-6 py-4 text-sm text-gray-600">
+                    <td className="px-3 sm:px-6 py-4 text-sm text-gray-600">
                       {new Date(item.date).toLocaleString()}
                     </td>
-                    <td className="px-6 py-4 text-sm font-medium text-green-600">
+                    <td className="px-3 sm:px-6 py-4 text-sm font-medium text-green-600">
                       {item.amount} KGS
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-600">{item.description || 'Income'}</td>
+                    <td className="px-3 sm:px-6 py-4 text-sm text-gray-600">{item.description || 'Income'}</td>
                   </tr>
                 ))}
               </tbody>

@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
+import Footer from '../components/Footer';
 
 type His = {
     date: any;
@@ -49,11 +49,16 @@ const History = () => {
         );
 
     return (
-        <>
-            <div className="flex">
-                <Sidebar />
-                <div className="flex-1 p-6 mt-6">
-                    <div className="bg-white shadow-lg rounded-2xl w-full max-w-4xl mx-auto p-6">
+        <div className="flex flex-col min-h-screen bg-gray-100">
+            <div className="flex flex-col md:flex-row flex-1">
+                {/* Sidebar */}
+                <div className="w-full md:w-60">
+                    <Sidebar />
+                </div>
+
+                {/* Основной контент */}
+                <div className="flex-1 p-4 md:p-6 mt-4 md:mt-6">
+                    <div className="bg-white shadow-lg rounded-2xl w-full max-w-4xl mx-auto p-4 md:p-6">
                         <h2 className="text-2xl font-bold text-gray-700 mb-6 text-center">Expense History</h2>
 
                         {history.length === 0 ? (
@@ -64,13 +69,13 @@ const History = () => {
                                     <table className="min-w-full divide-y divide-gray-200">
                                         <thead className="bg-gray-100 sticky top-0 z-10">
                                             <tr>
-                                                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                                                <th className="px-3 sm:px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
                                                     Date
                                                 </th>
-                                                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                                                <th className="px-3 sm:px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
                                                     Sum
                                                 </th>
-                                                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
+                                                <th className="px-3 sm:px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider">
                                                     Description
                                                 </th>
                                             </tr>
@@ -81,13 +86,15 @@ const History = () => {
                                                     key={item.id || idx}
                                                     className={`hover:bg-gray-50 ${idx % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
                                                 >
-                                                    <td className="px-6 py-4 text-sm text-gray-600">
+                                                    <td className="px-3 sm:px-6 py-4 text-sm text-gray-600">
                                                         {new Date(item.date).toLocaleString()}
                                                     </td>
-                                                    <td className="px-6 py-4 text-sm font-medium text-green-600">
+                                                    <td className="px-3 sm:px-6 py-4 text-sm font-medium text-green-600">
                                                         {item.amount} KGS
                                                     </td>
-                                                    <td className="px-6 py-4 text-sm text-gray-600">{item.description || 'Income'}</td>
+                                                    <td className="px-3 sm:px-6 py-4 text-sm text-gray-600">
+                                                        {item.description || 'Income'}
+                                                    </td>
                                                 </tr>
                                             ))}
                                         </tbody>
@@ -98,7 +105,7 @@ const History = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

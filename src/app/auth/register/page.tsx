@@ -69,21 +69,21 @@ const Page = () => {
                     value={inputUsername}
                     onChange={(e) => setInputUsername(e.target.value)}
                     placeholder='Username...'
-                    className='border border-gray-500 outline-none p-4 w-[400px] h-[60px] rounded-2xl'
+                    className='border border-gray-500 outline-none p-4 w-[350px] h-[60px] rounded-2xl'
                 />
                 <input
                     type="text"
                     value={inputEmail}
                     onChange={(e) => setInputEmail(e.target.value)}
                     placeholder='Email...'
-                    className='border border-gray-500 outline-none p-4 w-[400px] h-[60px] rounded-2xl'
+                    className='border border-gray-500 outline-none p-4 w-[350px] h-[60px] rounded-2xl'
                 />
                 <input
                     type="password"
                     value={inputPassword}
                     onChange={(e) => setInputPassword(e.target.value)}
                     placeholder='Password...'
-                    className='border border-gray-500 outline-none p-4 w-[400px] h-[60px] rounded-2xl'
+                    className='border border-gray-500 outline-none p-4 w-[350px] h-[60px] rounded-2xl'
                 />
                 <button
                     onClick={handleRegister}

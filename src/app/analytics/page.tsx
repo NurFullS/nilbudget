@@ -44,13 +44,19 @@ const AnalyticsPage = () => {
   }
 
   return (
-    <div className=" bg-gray-100">
-      <div className="flex">
-        <Sidebar />
-        <div className="flex-1 p-6 space-y-6">
-          <h1 className="text-3xl font-bold mb-6">📊 Analytics</h1>
+    <div className="flex flex-col min-h-screen bg-gray-100">
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="flex flex-1 flex-col md:flex-row">
+        {/* Sidebar */}
+        <div className="w-full md:w-60">
+          <Sidebar />
+        </div>
+
+        {/* Основной контент */}
+        <div className="flex-1 p-4 md:p-6 space-y-6">
+          <h1 className="text-3xl font-bold mb-6 text-center md:text-left">📊 Analytics</h1>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             <Card className="bg-green-100 shadow-md rounded-2xl border-none">
               <CardContent className="p-6 flex flex-col items-center">
                 <TrendingUp size={40} className="text-green-600" />
@@ -81,7 +87,6 @@ const AnalyticsPage = () => {
               </CardContent>
             </Card>
           </div>
-
         </div>
       </div>
     </div>

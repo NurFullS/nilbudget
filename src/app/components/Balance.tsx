@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { TextField } from '@mui/material';
@@ -90,35 +92,37 @@ const Balance = () => {
 
     return (
         <>
-            <div className="w-[400px] h-[200px] ml-30 mt-10 bg-green-200 shadow-lg rounded-2xl p-6 flex flex-col justify-between">
+            {/* Баланс */}
+            <div className="w-full max-w-md h-[200px] mt-10 mx-auto bg-green-200 shadow-lg rounded-2xl p-6 flex flex-col justify-between">
                 <div className="flex justify-between items-center">
                     <h2 className="text-xl font-bold text-gray-700">Balance</h2>
                     <span className="text-sm text-gray-500">{currencySymbols[newCurrency]}</span>
                 </div>
 
-                <div className="text-4xl font-extrabold text-green-600">
+                <div className="text-4xl font-extrabold text-green-600 break-words">
                     {(balance ?? 0).toLocaleString()} {currencySymbols[newCurrency] || 'USD'}
                 </div>
 
-                <div className="flex justify-between mt-4">
+                <div className="flex justify-between mt-4 gap-4">
                     <button
                         onClick={handleIncome}
-                        className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition cursor-pointer"
+                        className="flex-1 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition cursor-pointer"
                     >
                         Income
                     </button>
                     <button
                         onClick={handleConsumption}
-                        className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition cursor-pointer"
+                        className="flex-1 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition cursor-pointer"
                     >
                         Consumption
                     </button>
                 </div>
             </div>
 
+            {/* Модальное окно Consumption */}
             {openModalConsumption && (
-                <div className="fixed inset-0 flex justify-center items-center bg-gray-400 bg-opacity-50 z-50">
-                    <div className="bg-white rounded-2xl shadow-lg w-[300px] p-6 text-center">
+                <div className="fixed inset-0 flex justify-center items-center bg-gray-400 bg-opacity-50 z-50 px-4">
+                    <div className="bg-white rounded-2xl shadow-lg w-full max-w-sm p-6 text-center">
                         <h1 className="text-xl font-bold mb-4">Add Consumption</h1>
                         <input
                             type="number"
@@ -137,16 +141,16 @@ const Balance = () => {
                             fullWidth
                             className="mb-3"
                         />
-                        <div className="flex justify-between mt-5">
+                        <div className="flex justify-between mt-5 gap-4">
                             <button
                                 onClick={handleAddConsumption}
-                                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
+                                className="flex-1 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
                             >
                                 Consumption
                             </button>
                             <button
                                 onClick={() => { setOpenModalConsumption(false); resetFields(); }}
-                                className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500 transition"
+                                className="flex-1 bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500 transition"
                             >
                                 Close
                             </button>
@@ -155,9 +159,10 @@ const Balance = () => {
                 </div>
             )}
 
+            {/* Модальное окно Income */}
             {openModalBalance && (
-                <div className="fixed inset-0 flex justify-center items-center bg-gray-400 bg-opacity-50 z-50">
-                    <div className="bg-white rounded-2xl shadow-lg w-[300px] p-6 text-center">
+                <div className="fixed inset-0 flex justify-center items-center bg-gray-400 bg-opacity-50 z-50 px-4">
+                    <div className="bg-white rounded-2xl shadow-lg w-full max-w-sm p-6 text-center">
                         <h1 className="text-xl font-bold mb-4">Add Income</h1>
                         <input
                             type="number"
@@ -176,16 +181,16 @@ const Balance = () => {
                             <option value="EUR">EUR</option>
                             <option value="RUB">RUB</option>
                         </select>
-                        <div className="flex justify-between">
+                        <div className="flex justify-between gap-4">
                             <button
                                 onClick={handleAddIncome}
-                                className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition"
+                                className="flex-1 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition"
                             >
                                 Add
                             </button>
                             <button
                                 onClick={() => { setOpenModalBalance(false); resetFields(); }}
-                                className="bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500 transition"
+                                className="flex-1 bg-gray-400 text-white px-4 py-2 rounded-lg hover:bg-gray-500 transition"
                             >
                                 Close
                             </button>
