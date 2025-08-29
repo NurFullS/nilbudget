@@ -26,7 +26,7 @@ const History = () => {
                 });
                 setHistory(response.data);
             } catch (err) {
-                setError('Не удалось загрузить историю');
+                setError('Error not history found');
             } finally {
                 setLoading(false);
             }
