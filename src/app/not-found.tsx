@@ -8,7 +8,6 @@ import Link from 'next/link'
 const NotFound = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-      <Header />
       <div className="flex flex-1">
         <Sidebar />
         <div className="flex-1 flex flex-col justify-center items-center text-center mr-40 mb-40">

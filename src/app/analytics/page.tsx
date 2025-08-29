@@ -44,14 +44,14 @@ const AnalyticsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className=" bg-gray-100">
       <div className="flex">
         <Sidebar />
         <div className="flex-1 p-6 space-y-6">
           <h1 className="text-3xl font-bold mb-6">📊 Analytics</h1>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="bg-green-100 shadow-md rounded-2xl">
+            <Card className="bg-green-100 shadow-md rounded-2xl border-none">
               <CardContent className="p-6 flex flex-col items-center">
                 <TrendingUp size={40} className="text-green-600" />
                 <p className="text-lg font-medium text-green-700 mt-2">Income</p>
@@ -61,7 +61,7 @@ const AnalyticsPage = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-red-100 shadow-md rounded-2xl">
+            <Card className="bg-red-100 shadow-md rounded-2xl border-none">
               <CardContent className="p-6 flex flex-col items-center">
                 <TrendingDown size={40} className="text-red-600" />
                 <p className="text-lg font-medium text-red-700 mt-2">Consumption</p>
@@ -71,7 +71,7 @@ const AnalyticsPage = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-blue-100 shadow-md rounded-2xl">
+            <Card className="bg-blue-100 shadow-md rounded-2xl border-none">
               <CardContent className="p-6 flex flex-col items-center">
                 <DollarSign size={40} className="text-blue-600" />
                 <p className="text-lg font-medium text-blue-700 mt-2">Balance</p>

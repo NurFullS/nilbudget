@@ -133,16 +133,16 @@ const Balance = () => {
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                             multiline
-                            rows={4}
+                            rows={3}
                             fullWidth
-                            className="mb-4"
+                            className="mb-3"
                         />
-                        <div className="flex justify-between">
+                        <div className="flex justify-between mt-5">
                             <button
                                 onClick={handleAddConsumption}
                                 className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
                             >
-                                Add
+                                Consumption
                             </button>
                             <button
                                 onClick={() => { setOpenModalConsumption(false); resetFields(); }}
