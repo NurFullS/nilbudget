@@ -19,12 +19,13 @@ const Profile = () => {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const router = useRouter()
+    const router = useRouter();
+    const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL; // <--- Используем переменную окружения
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get('http://localhost:8080/auth/me', {
+                const res = await axios.get(`${BASE_URL}/auth/me`, {
                     withCredentials: true
                 });
                 setUser(res.data);
@@ -36,14 +37,14 @@ const Profile = () => {
         }
 
         fetchData();
-    }, []);
+    }, [BASE_URL]);
 
     if (loading) return <p className="text-center mt-20 text-gray-500">Загрузка...</p>;
     if (error) return <p className="text-center mt-20 text-red-500">Ошибка: {error}</p>;
 
     const handleLogout = async () => {
         try {
-            await axios.post('http://localhost:8080/auth/logout', {}, { withCredentials: true });
+            await axios.post(`${BASE_URL}/auth/logout`, {}, { withCredentials: true });
             setUser(null);
             router.replace('/auth/login');
         } catch (err) {
@@ -53,7 +54,6 @@ const Profile = () => {
 
     return (
         <div className="flex flex-col min-h-screen bg-gray-100">
-
             <div className="flex flex-1 flex-col md:flex-row">
                 {/* Sidebar */}
                 <div className="w-full md:w-60">

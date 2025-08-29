@@ -15,10 +15,12 @@ const History = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/auth/consumption/history', {
+        const response = await axios.get(`${BASE_URL}/auth/consumption/history`, {
           withCredentials: true,
         });
         setHistory(response.data);
@@ -30,7 +32,7 @@ const History = () => {
     };
 
     fetchHistory();
-  }, []);
+  }, [BASE_URL]);
 
   if (loading)
     return (

@@ -12,6 +12,8 @@ const Balance = () => {
     const [amount, setAmount] = useState('');
     const [description, setDescription] = useState('');
 
+    const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
     const currencySymbols: Record<string, string> = {
         USD: '$',
         KGS: 'KGS',
@@ -29,7 +31,7 @@ const Balance = () => {
 
     const fetchUser = async () => {
         try {
-            const res = await axios.get('http://localhost:8080/auth/me', { withCredentials: true });
+            const res = await axios.get(`${BASE_URL}/auth/me`, { withCredentials: true });
             setBalance(res.data.balance);
             setCurrency(res.data.valute || 'USD');
         } catch (err) {
@@ -47,7 +49,7 @@ const Balance = () => {
 
         try {
             const res = await axios.post(
-                'http://localhost:8080/auth/income',
+                `${BASE_URL}/auth/income`,
                 { amount: num, newCurrency }, 
                 { withCredentials: true }
             );
@@ -62,7 +64,7 @@ const Balance = () => {
 
         try {
             await axios.post(
-                "http://localhost:8080/auth/valute",
+                `${BASE_URL}/auth/valute`,
                 { valute: newCurrency },
                 { withCredentials: true }
             );
@@ -77,7 +79,7 @@ const Balance = () => {
 
         try {
             const res = await axios.post(
-                'http://localhost:8080/auth/consumption',
+                `${BASE_URL}/auth/consumption`,
                 { amount: num, description },
                 { withCredentials: true }
             );
@@ -92,7 +94,6 @@ const Balance = () => {
 
     return (
         <>
-            {/* Баланс */}
             <div className="w-full max-w-md h-[200px] mt-10 mx-auto bg-green-200 shadow-lg rounded-2xl p-6 flex flex-col justify-between">
                 <div className="flex justify-between items-center">
                     <h2 className="text-xl font-bold text-gray-700">Balance</h2>
@@ -119,7 +120,6 @@ const Balance = () => {
                 </div>
             </div>
 
-            {/* Модальное окно Consumption */}
             {openModalConsumption && (
                 <div className="fixed inset-0 flex justify-center items-center bg-gray-400 bg-opacity-50 z-50 px-4">
                     <div className="bg-white rounded-2xl shadow-lg w-full max-w-sm p-6 text-center">
@@ -159,7 +159,6 @@ const Balance = () => {
                 </div>
             )}
 
-            {/* Модальное окно Income */}
             {openModalBalance && (
                 <div className="fixed inset-0 flex justify-center items-center bg-gray-400 bg-opacity-50 z-50 px-4">
                     <div className="bg-white rounded-2xl shadow-lg w-full max-w-sm p-6 text-center">

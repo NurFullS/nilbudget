@@ -15,11 +15,13 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const router = useRouter()
 
+  const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+
   useEffect(() => {
     let isMounted = true
     const fetchUser = async () => {
       try {
-        const res = await axios.get<User>('http://localhost:8080/auth/me', {
+        const res = await axios.get<User>(`${BASE_URL}/auth/me`, {
           withCredentials: true
         })
         if (isMounted) setUser(res.data)
@@ -33,15 +35,15 @@ const Header = () => {
     return () => {
       isMounted = false
     }
-  }, [])
+  }, [BASE_URL])
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:8080/auth/logout', {}, { withCredentials: true });
-      setUser(null);
-      router.push('/auth/login');
+      await axios.post(`${BASE_URL}/auth/logout`, {}, { withCredentials: true })
+      setUser(null)
+      router.push('/auth/login')
     } catch (err) {
-      console.error('Error at logout!:', err);
+      console.error('Error at logout!:', err)
     }
   }
 
@@ -103,8 +105,8 @@ const Header = () => {
           {user ? (
             <button
               onClick={() => {
-                handleLogout();
-                setMenuOpen(false);
+                handleLogout()
+                setMenuOpen(false)
               }}
               className="text-red-400"
             >

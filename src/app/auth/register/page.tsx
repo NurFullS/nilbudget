@@ -4,13 +4,14 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
-const Page = () => {
+const RegisterPage = () => {
     const [inputUsername, setInputUsername] = useState('')
     const [inputEmail, setInputEmail] = useState('')
     const [inputPassword, setInputPassword] = useState('')
     const [showMessage, setShowMessage] = useState('')
     const [showMessageError, setShowMessageError] = useState('')
     const router = useRouter()
+    const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL // <--- универсальный базовый URL
 
     const validateEmail = (email: string) => {
         const re = /\S+@\S+\.\S+/
@@ -35,20 +36,21 @@ const Page = () => {
         }
 
         try {
-            const res = await axios.post('http://localhost:8080/auth/register', {
-                username: inputUsername,
-                email: inputEmail,
-                password: inputPassword
-            })
-            setShowMessage(res.data.message || 'Регистрация успешна!')
-            setTimeout(() => {
-                router.push('/auth/login')
-            })
+            const res = await axios.post(
+                `${BASE_URL}/auth/register`,
+                {
+                    username: inputUsername,
+                    email: inputEmail,
+                    password: inputPassword
+                }
+            )
+            setShowMessage(res.data.message || 'Registration successful!')
+            setTimeout(() => router.push('/auth/login'), 1000)
         } catch (error: any) {
             if (error.response) {
-                setShowMessageError(error.response.data.message || 'Error network!')
+                setShowMessageError(error.response.data.message || 'Server error!')
             } else {
-                setShowMessageError('Error network!')
+                setShowMessageError('Network error!')
             }
         }
     }
@@ -96,7 +98,7 @@ const Page = () => {
 
                 {showMessage && <p className='text-green-700 text-center text-[18px]'>{showMessage}</p>}
 
-                <div className='justify-center items-center text-center '>
+                <div className='justify-center items-center text-center'>
                     <p>Already have an account?<a href="/auth/login" className='ml-2 text-blue-700'>LogIn.</a></p>
                 </div>
             </div>
@@ -104,4 +106,4 @@ const Page = () => {
     )
 }
 
-export default Page
+export default RegisterPage
