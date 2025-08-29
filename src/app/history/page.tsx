@@ -50,7 +50,6 @@ const History = () => {
 
     return (
         <>
-            <Header />
             <div className="flex min-h-[calc(100vh-80px)]">
                 <Sidebar />
                 <div className="flex-1 p-6 mt-6">

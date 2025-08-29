@@ -6,6 +6,7 @@ import Sidebar from '../components/Sidebar'
 import { Card, CardContent } from '@/components/ui/card'
 import { TrendingUp, TrendingDown, DollarSign } from 'lucide-react'
 import axios from 'axios'
+import Footer from '../components/Footer'
 
 interface UserSummary {
   totalIncome: number
@@ -44,13 +45,11 @@ const AnalyticsPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <Header />
       <div className="flex">
         <Sidebar />
         <div className="flex-1 p-6 space-y-6">
           <h1 className="text-3xl font-bold mb-6">📊 Analytics</h1>
 
-          {/* Карточки: Income, Consumption, Balance */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Card className="bg-green-100 shadow-md rounded-2xl">
               <CardContent className="p-6 flex flex-col items-center">
@@ -83,7 +82,6 @@ const AnalyticsPage = () => {
             </Card>
           </div>
 
-          {/* Здесь можно добавить график доход/расход */}
         </div>
       </div>
     </div>

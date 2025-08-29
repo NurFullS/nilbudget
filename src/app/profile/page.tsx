@@ -52,7 +52,6 @@ const Profile = () => {
 
     return (
         <div className="min-h-screen bg-gray-100 flex flex-col">
-            <Header />
 
             <div className="flex flex-1">
                 <Sidebar />
