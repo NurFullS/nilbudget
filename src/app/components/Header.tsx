@@ -4,38 +4,28 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-
-type User = {
-  username: string
-}
+import { useUser } from './UserContext'
 
 const Header = () => {
-  const [user, setUser] = useState<User | null>(null)
+  const { user, setUser } = useUser()
   const [loading, setLoading] = useState(true)
   const [menuOpen, setMenuOpen] = useState(false)
   const router = useRouter()
-
   const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
   useEffect(() => {
-    let isMounted = true
     const fetchUser = async () => {
       try {
-        const res = await axios.get<User>(`${BASE_URL}/auth/me`, {
-          withCredentials: true
-        })
-        if (isMounted) setUser(res.data)
+        const res = await axios.get(`${BASE_URL}/auth/me`, { withCredentials: true })
+        setUser(res.data)
       } catch {
-        if (isMounted) setUser(null)
+        setUser(null)
       } finally {
-        if (isMounted) setLoading(false)
+        setLoading(false)
       }
     }
     fetchUser()
-    return () => {
-      isMounted = false
-    }
-  }, [BASE_URL])
+  }, [BASE_URL, setUser])
 
   const handleLogout = async () => {
     try {
@@ -43,75 +33,48 @@ const Header = () => {
       setUser(null)
       router.push('/auth/login')
     } catch (err) {
-      console.error('Error at logout!:', err)
+      console.error(err)
     }
   }
 
   return (
     <header className="bg-blue-600 text-white shadow-md">
       <div className="container mx-auto flex justify-between items-center px-4 h-[80px]">
-
         <Link href="/" className="flex items-center gap-2 select-none">
-          <img
-            className="w-[50px]"
-            src="https://media.licdn.com/dms/image/v2/D5612AQGplp7JKG6Iiw/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1673950361361?e=2147483647&v=beta&t=L4d5P81GijVgU4u1yJtFLVsIqATkfWTrymEPSd_C6_o"
-            alt="Logo"
-          />
           <span className="text-xl font-bold">NilBudget</span>
         </Link>
 
         <nav className="hidden md:flex gap-6 text-lg">
-          <Link href="/" className="hover:text-gray-200">Main</Link>
-          <Link href="/profile" className="hover:text-gray-200">Profile</Link>
-          <Link href="/settings" className="hover:text-gray-200">Settings</Link>
+          <Link href="/">Main</Link>
+          <Link href="/profile">Profile</Link>
+          <Link href="/settings">Settings</Link>
         </nav>
 
         <div className="hidden md:flex items-center gap-4">
           {loading ? (
-            <span className="text-gray-300">Loading...</span>
+            <span>Loading...</span>
           ) : user ? (
             <>
-              <span className="text-[18px]"><strong>{user.username}</strong></span>
-              <button
-                onClick={handleLogout}
-                className="text-red-600 underline cursor-pointer text-[16px] font-bold"
-              >
+              <span><strong>{user.username}</strong></span>
+              <button onClick={handleLogout} className="text-red-600 underline">
                 Logout
               </button>
             </>
           ) : (
             <>
-              <Link href="/auth/login" className="hover:text-gray-200">Login</Link>
-              <Link href="/auth/register" className="bg-green-500 px-4 py-2 rounded-lg hover:bg-green-600">
-                Register
-              </Link>
+              <Link href="/auth/login">Login</Link>
+              <Link href="/auth/register">Register</Link>
             </>
           )}
         </div>
-
-        <button
-          aria-label="Toggle menu"
-          className="md:hidden text-2xl"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          ☰
-        </button>
       </div>
 
       {menuOpen && (
-        <div className="md:hidden flex flex-col items-center bg-blue-700 text-lg py-4 gap-4">
+        <div className="md:hidden flex flex-col items-center bg-blue-700 py-4 gap-4">
           <Link href="/" onClick={() => setMenuOpen(false)}>Main</Link>
           {user && <Link href="/profile" onClick={() => setMenuOpen(false)}>Profile</Link>}
           {user ? (
-            <button
-              onClick={() => {
-                handleLogout()
-                setMenuOpen(false)
-              }}
-              className="text-red-400"
-            >
-              Logout
-            </button>
+            <button onClick={() => { handleLogout(); setMenuOpen(false) }}>Logout</button>
           ) : (
             <>
               <Link href="/auth/login" onClick={() => setMenuOpen(false)}>Login</Link>

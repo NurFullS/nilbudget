@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useHistory } from './UserContext';
 
 type His = {
   date: any;
@@ -11,10 +12,9 @@ type His = {
 };
 
 const History = () => {
-  const [history, setHistory] = useState<His[]>([]);
+  const { history, setHistory } = useHistory();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-
   const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   useEffect(() => {

@@ -3,19 +3,18 @@
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
+import { useUser } from '../../components/UserContext'
 
 const LoginPage = () => {
+    const { setUser } = useUser()
     const [inputEmail, setInputEmail] = useState('')
     const [inputPassword, setInputPassword] = useState('')
     const [showMessage, setShowMessage] = useState('')
     const [showMessageError, setShowMessageError] = useState('')
     const router = useRouter()
-    const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL // <--- переменная окружения
+    const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
-    const validateEmail = (email: string) => {
-        const re = /\S+@\S+\.\S+/
-        return re.test(email)
-    }
+    const validateEmail = (email: string) => /\S+@\S+\.\S+/.test(email)
 
     const handleLogin = async () => {
         setShowMessage('')
@@ -36,7 +35,10 @@ const LoginPage = () => {
                 { email: inputEmail, password: inputPassword },
                 { withCredentials: true }
             )
-            setShowMessage(res.data.message || 'Login successful!')
+
+            setUser(res.data)
+            setShowMessage('Login successful!')
+
             setTimeout(() => router.replace('/'), 1000)
         } catch (error: any) {
             if (error.response) {

@@ -2,10 +2,11 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useBalance } from './UserContext'
 import { TextField } from '@mui/material';
 
 const Balance = () => {
-    const [balance, setBalance] = useState(0);
+    const { balance, setBalance } = useBalance();
     const [newCurrency, setCurrency] = useState('USD'); 
     const [openModalBalance, setOpenModalBalance] = useState(false);
     const [openModalConsumption, setOpenModalConsumption] = useState(false);

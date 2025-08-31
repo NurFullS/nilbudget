@@ -11,7 +11,7 @@ const RegisterPage = () => {
     const [showMessage, setShowMessage] = useState('')
     const [showMessageError, setShowMessageError] = useState('')
     const router = useRouter()
-    const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL // <--- универсальный базовый URL
+    const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
     const validateEmail = (email: string) => {
         const re = /\S+@\S+\.\S+/
