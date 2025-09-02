@@ -6,7 +6,7 @@ import History from "./components/History";
 
 export default function Home() {
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-gray-50">
+    <div className="flex flex-col md:flex-row bg-gray-50">
       <div className="w-full md:w-60">
         <Sidebar />
       </div>

@@ -50,14 +50,12 @@ const History = () => {
         );
 
     return (
-        <div className="flex flex-col min-h-screen bg-gray-100">
+        <div className="flex flex-col bg-gray-100">
             <div className="flex flex-col md:flex-row flex-1">
-                {/* Sidebar */}
                 <div className="w-full md:w-60">
                     <Sidebar />
                 </div>
 
-                {/* Основной контент */}
                 <div className="flex-1 p-4 md:p-6 mt-4 md:mt-6">
                     <div className="bg-white shadow-lg rounded-2xl w-full max-w-4xl mx-auto p-4 md:p-6">
                         <h2 className="text-2xl font-bold text-gray-700 mb-6 text-center">Expense History</h2>

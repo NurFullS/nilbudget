@@ -44,15 +44,13 @@ const AnalyticsPage = () => {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100">
+    <div className="flex flex-col bg-gray-100">
 
       <div className="flex flex-1 flex-col md:flex-row">
-        {/* Sidebar */}
         <div className="w-full md:w-60">
           <Sidebar />
         </div>
 
-        {/* Основной контент */}
         <div className="flex-1 p-4 md:p-6 space-y-6">
           <h1 className="text-3xl font-bold mb-6 text-center md:text-left">📊 Analytics</h1>
 
