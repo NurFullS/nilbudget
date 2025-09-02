@@ -21,7 +21,7 @@ const ProtectedPage = () => {
   const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
   useEffect(() => {
-    if (inputValidate === 'nurzhenishov10@gmail.com') {
+    if (inputValidate === 'Nur') {
       setUserEmail(inputValidate)
       setModalValidate(false)
     }
